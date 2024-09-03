@@ -1,0 +1,34 @@
+﻿@page
+@model lab_1_zodiac.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1 class="text-center">Chinese Zodiac Sign Finder</h1>
+
+<div style="text-align: left; margin-left: 20px;">
+    <form method="post">
+        <p>Enter a year (1900 - @(DateTime.Now.Year + 1)):</p>
+        <input type="number" asp-for="Year" class="form-control" style="margin-bottom: 20px;" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+        <div>
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Find Zodiac</button>
+            <button type="submit" asp-page-handler="Clear" class="btn btn-secondary">Clear</button>
+        </div>
+    </form>
+
+    @if (Model.DisplayError)
+    {
+        <div style="border: 2px solid rgb(255, 176, 176); background-color: #FFCCCC; padding: 10px; margin-top: 20px; width: 50%; margin-left: auto; margin-right: auto;">
+            Year must be between 1900 and next year. Please try again.
+        </div>
+    }
+    else if (Model.ZodiacSign != null)
+    {
+        <div style="border: 2px solid rgb(178, 255, 178); background-color: #CCFFCC; padding: 10px; margin-top: 20px; width: 50%; margin-left: auto; margin-right: auto;">
+            <p>Your Zodiac Sign: @Model.ZodiacSign</p>
+            <img src="~/images/@(Model.ZodiacSign.ToLower().Replace(" ", "")).png" alt="@Model.ZodiacSign" style="display: block; margin: 0 auto;">
+        </div>
+    }
+</div>
